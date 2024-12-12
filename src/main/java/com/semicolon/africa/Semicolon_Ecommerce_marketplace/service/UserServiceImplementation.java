@@ -32,10 +32,8 @@ public class UserServiceImplementation implements UserService {
     }
 
     private void validateExistingEmail(String email) {
-        boolean existByEmail = userRepository.existByEmail(email);
-        if (existByEmail) {
-            throw new EmailAlreadyExist("Email Already Exist");
-        }
+        boolean existByEmail = userRepository.existsByEmail(email);
+        if (existByEmail) throw new EmailAlreadyExist("Email Already Exist");
     }
 
     @Override

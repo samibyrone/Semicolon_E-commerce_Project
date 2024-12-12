@@ -12,7 +12,7 @@ import java.util.List;
 public class User {
 
     @Id
-    private int user_id;
+    private String id;
     private String firstName;
     private String lastName;
     private String userName;

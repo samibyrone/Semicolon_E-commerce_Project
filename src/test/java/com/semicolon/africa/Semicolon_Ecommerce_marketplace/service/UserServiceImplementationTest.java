@@ -12,14 +12,14 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@ActiveProfiles("test")
+//@ActiveProfiles("test")
 public class UserServiceImplementationTest {
 
     @Autowired
     private UserServiceImplementation userServiceImplementation;
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @BeforeEach
     public void setUp() {
@@ -27,19 +27,22 @@ public class UserServiceImplementationTest {
     }
 
     @Test
-    public void userCanBeRegisteredTest() {
+    public void testThatUserCanBeRegistered() {
         UserRegisterResponse response = registerUser();
         assertThat(response).isNotNull();
         assertThat(userServiceImplementation.getAllUsers().size()).isEqualTo(1L);
-        assertThat(response.getMessage().contains("Registered Successfully"));
+        assertThat(response.getMessage()).contains("Registered Successfully");
     }
 
     private UserRegisterResponse registerUser() {
         UserRegisterRequest request = new UserRegisterRequest();
         request.setFirstName("samson");
         request.setLastName("ibironke");
+        request.setUserName("Sammy");
         request.setEmail("ibironke@gmail.com");
         request.setPassword("12345");
+        request.setPhoneNumber("08187606899");
+        request.setRole("CUSTOMER");
         request.setAddress("302, alagomeji bus-stop sabo yaba Lagos");
         UserRegisterResponse response = userServiceImplementation.registerUser(request);
         return response;
