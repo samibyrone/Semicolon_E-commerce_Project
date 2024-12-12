@@ -7,10 +7,15 @@ import com.semicolon.africa.Semicolon_Ecommerce_marketplace.dtos.requests.UserRe
 import com.semicolon.africa.Semicolon_Ecommerce_marketplace.dtos.responses.UserLoginResponse;
 import com.semicolon.africa.Semicolon_Ecommerce_marketplace.dtos.responses.UserRegisterResponse;
 import com.semicolon.africa.Semicolon_Ecommerce_marketplace.exception.EmailAlreadyExist;
+import com.semicolon.africa.Semicolon_Ecommerce_marketplace.exception.EmailOrPasswordDoesNotExist;
 import com.semicolon.africa.Semicolon_Ecommerce_marketplace.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeConstants;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import static com.semicolon.africa.Semicolon_Ecommerce_marketplace.utils.Mapper.map;
@@ -43,6 +48,7 @@ public class UserServiceImplementation implements UserService {
 
     public UserLoginResponse loginUser(UserLoginRequest userLogin) {
         User user = findByEmail(userLogin.getEmail());
+        validatingPassword(userLogin.getPassword());
         mapLogin(user);
         user.setLoggedIn(true);
         userRepository.save(user);
@@ -53,4 +59,14 @@ public class UserServiceImplementation implements UserService {
         return userRepository.findByEmail(email)
                 .orElseThrow( () -> new UserNotFoundException("User does not exist"));
     }
+
+    private void validatingPassword(String password) throws NoSuchAlgorithmException {
+//        MessageDigest pass = MessageDigest.getInstance("MD5");
+//        pass.update(password.getBytes());
+//        byte[] digest = pass.digest();
+//        String hash = DatatypeConverter.printHaxBinary(digest).toUpperCase();
+//        return hash;
+        boolean validatePassword = userRepository.validatePassword(password);
+        if (!validatePassword) throw new EmailOrPasswordDoesNotExist("Email and Password is Wrong or Does not Exist");
+        return ;
 }

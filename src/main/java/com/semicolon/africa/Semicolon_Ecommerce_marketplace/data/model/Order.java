@@ -4,6 +4,8 @@ import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Data
 @Document
 public class Order {
@@ -11,6 +13,6 @@ public class Order {
     @Id
     private int order_id;
     private int user_id;
-    private Data date;
+    private Date date;
     private String status;
 }

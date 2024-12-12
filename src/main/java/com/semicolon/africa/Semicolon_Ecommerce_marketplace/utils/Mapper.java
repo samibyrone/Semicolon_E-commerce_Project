@@ -18,7 +18,7 @@ public class Mapper {
         user.setAddress(userRegisterRequest.getAddress());
         user.setPhoneNumber(userRegisterRequest.getPhoneNumber());
         user.setPassword(userRegisterRequest.getPassword());
-//        user.setRole(userRegisterRequest.getRole());
+        user.setRole(userRegisterRequest.getRole());
     }
 
     public static UserRegisterResponse map(User user) {
@@ -31,6 +31,7 @@ public class Mapper {
     public static UserLoginResponse mapLogin(User user) {
         UserLoginResponse userLoginResponse = new UserLoginResponse();
         user.setEmail(user.getEmail());
+        user.setPassword(user.getPassword());
         userLoginResponse.setMessage("Logged in Successfully");
         userLoginResponse.setLoginSuccessful(true);
         return userLoginResponse;
@@ -46,7 +47,7 @@ public class Mapper {
     public static ProductRegisterResponse mapProduct(Product product) {
         ProductRegisterResponse productRegisterResponse = new ProductRegisterResponse();
         productRegisterResponse.setMessage("Product Successfully Created");
-        productRegisterResponse.setProduct_id(product.getProduct_id());
+        productRegisterResponse.setProduct_id(product.getId());
         return productRegisterResponse;
     }
 }

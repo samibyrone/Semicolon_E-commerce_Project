@@ -12,7 +12,7 @@ import java.util.Optional;
 public class Product {
 
     @Id
-    private String product_id;
+    private String id;
     private String productName;
     private String productDescription;
     private Double productPrice;
